@@ -11,11 +11,11 @@ use tracing_subscriber;
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Budget {
-    current: u8,
+    current: u16,
 }
 
 impl Budget {
-    pub fn new(current: u8) -> Self {
+    pub fn new(current: u16) -> Self {
         Self { current }
     }
 }
@@ -89,7 +89,7 @@ async fn home() -> Html<String> {
         Ok(budget) => budget,
         Err(_) => return Html("No budget found".to_string()),
     };
-    let current_budget: u8 = match current_budget.parse::<u8>() {
+    let current_budget: u16 = match current_budget.parse::<u16>() {
         Ok(budget) => budget,
         Err(_) => return Html("Invalid budget".to_string()),
     };
@@ -118,7 +118,7 @@ async fn add_budget(Json(body): Json<Budget>) -> (StatusCode, Json<Budget>) {
         Ok(budget) => budget,
         Err(_) => return (StatusCode::INTERNAL_SERVER_ERROR, Json(Budget::new(0))),
     };
-    let current_budget: u8 = match current_budget.parse::<u8>() {
+    let current_budget: u16 = match current_budget.parse::<u16>() {
         Ok(budget) => budget,
         Err(_) => return (StatusCode::INTERNAL_SERVER_ERROR, Json(Budget::new(0))),
     };
@@ -134,7 +134,7 @@ async fn subtract_budget(Json(body): Json<Budget>) -> (StatusCode, Json<Budget>)
         Ok(budget) => budget,
         Err(_) => return (StatusCode::INTERNAL_SERVER_ERROR, Json(Budget::new(0))),
     };
-    let current_budget: u8 = match current_budget.parse::<u8>() {
+    let current_budget: u16 = match current_budget.parse::<u16>() {
         Ok(budget) => budget,
         Err(_) => return (StatusCode::INTERNAL_SERVER_ERROR, Json(Budget::new(0))),
     };
